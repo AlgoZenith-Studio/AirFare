@@ -1,29 +1,35 @@
 /*
- * AirFare Design Tokens — single source of truth.
- * Mirrors TRD.md Part C exactly. Never hand-edit a hex value into a component;
- * add or change it here and let Tailwind consume it via the preset.
+ * AeroFareX Design Tokens — data-visualisation layer (TRD.md Part C).
+ *
+ * Brand colours (sky palette, black, white, surfaces, text) live in ./brand.css,
+ * which this file imports. The UI roles below are ALIASES of those brand tokens so
+ * the analyst dashboard and the public landing share one palette.
+ *
+ * What stays defined here: the chart-only colours. --slot-* distinguish up to five
+ * carriers/series and --status-* signal data quality; a single-hue sky palette cannot
+ * separate five lines or convey warning vs critical, so these remain multi-hue.
+ * Never hand-edit a hex value into a component; add or change it in brand.css or here.
  */
+@import './brand.css';
 
 :root {
-  /* Surfaces & Ink */
-  --page: #f9f9f7;
-  --surface: #fcfcfb;
-  --surface-raised: #ffffff;
-  --brand: #12304a;          /* Top bar chrome only; never a data mark */
-  --brand-accent: #0b6e8f;   /* Links, active nav indicator, focus rings */
-  --text-primary: #0b0b0b;
-  --text-secondary: #52514e;
-  --text-muted: #898781;
-  --grid: #e1e0d9;
-  --axis: #c3c2b7;
-  --border: rgba(11, 11, 11, 0.10);
+  /* UI roles used by the dashboard (TRD names) -> brand tokens */
+  --surface-raised: var(--surface);
+  --brand: var(--sky-900);          /* top bar chrome only; never a data mark */
+  --brand-accent: var(--sky-800);   /* links, active nav, focus rings (6.7:1 on white) */
+  --text-primary: var(--text-1);
+  --text-secondary: var(--text-2);
+  --text-muted: var(--text-3);
+  --grid: var(--line);
+  --axis: var(--line-control);
+  --border: var(--line);
 
-  /* Categorical Series (Fixed Slot Order — Never Recycled) */
-  --slot-1: #2a78d6;  /* Blue: AFI Headline / IndiGo */
-  --slot-2: #eb6834;  /* Orange: TCT-AFI / Air India */
-  --slot-3: #1baf7a;  /* Aqua: AFI uncorrected / Akasa Air */
-  --slot-4: #eda100;  /* Yellow: ANC-AFI / SpiceJet */
-  --slot-5: #e87ba4;  /* Magenta: MakeMyTrip */
+  /* Categorical Series (Fixed Slot Order — Never Recycled). Slot 1 = brand vivid sky. */
+  --slot-1: var(--sky-500);  /* AFI Headline / IndiGo */
+  --slot-2: #eb6834;         /* TCT-AFI / Air India */
+  --slot-3: #1baf7a;         /* AFI uncorrected / Akasa Air */
+  --slot-4: #eda100;         /* ANC-AFI / SpiceJet */
+  --slot-5: #e87ba4;         /* MakeMyTrip */
 
   /* Status Colors (Never reused as series lines) */
   --status-good: #0ca30c;
@@ -46,16 +52,16 @@
 }
 
 [data-theme='dark'] {
-  --page: #0d0d0d;
-  --surface: #1a1a19;
+  --page: var(--ink);
+  --surface: var(--black-soft);
   --surface-raised: #242423;
-  --text-primary: #ffffff;
-  --text-secondary: #c3c2b7;
-  --text-muted: #898781;
-  --grid: #2c2c2a;
-  --axis: #383835;
-  --border: rgba(255, 255, 255, 0.10);
-  --slot-1: #3987e5;
+  --text-primary: var(--dark-text-1);
+  --text-secondary: var(--dark-text-2);
+  --text-muted: var(--dark-text-3);
+  --grid: var(--dark-line);
+  --axis: var(--dark-border);
+  --border: var(--dark-line);
+  --slot-1: var(--sky-400);
   --slot-2: #d95926;
   --slot-3: #199e70;
   --slot-4: #c98500;

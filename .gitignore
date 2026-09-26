@@ -64,10 +64,11 @@ htmlcov/
 # Local Presentation Generators & Binary PPTX Assets
 *.pptx
 generate_*.py
-SIH_PRESENTATION_SUMMARY.md
-REVAMPED_PRESENTATION_SUMMARY.md
+docs/SIH_PRESENTATION_SUMMARY.md
+docs/REVAMPED_PRESENTATION_SUMMARY.md
 
 # Agent and CLI local artifacts
 .agents/
 skills-lock.json
+
 

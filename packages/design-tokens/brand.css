@@ -1,0 +1,178 @@
+/*
+ * ============================================================================
+ *  AeroFareX BRAND COLOURS — the single source of truth
+ * ============================================================================
+ *  Every AeroFareX surface (landing, dashboard, docs) imports this file.
+ *  Never write a colour anywhere else: add or change it HERE, then use var(--…).
+ *  A JS/TS mirror lives in ./brand.ts — keep the two in sync.
+ *
+ *  Palette = "Vivid Sky Blue" (5 tones) + 2 derived deep blues + black + white.
+ *
+ *  READABILITY RULE (WCAG 2.1 AA):
+ *    #00ccff and the lighter sky tones are too faint to read as TEXT on white
+ *    (#00ccff on white = 1.9:1; 4.5:1 is required). Use the sky tones for
+ *    FILLS, buttons, bars, highlights and borders. Text is black on light
+ *    surfaces, white on dark ones, and --sky-900 / --sky-800 when text must be blue.
+ * ============================================================================
+ */
+
+:root {
+  /* ------------------------------------------------------------------------
+   * 1. RAW PALETTE — the only literal colour values in the system
+   * ---------------------------------------------------------------------- */
+  --sky-100: #f5fdff;  /* rgb(245,253,255)  palest tint — alt section bg        */
+  --sky-200: #d6f7ff;  /* rgb(214,247,255)  soft tint — selected states, tiles  */
+  --sky-300: #a8eeff;  /* rgb(168,238,255)  light — borders, secondary bars     */
+  --sky-400: #6ce2ff;  /* rgb(108,226,255)  bright — editorial band bg, marker  */
+  --sky-500: #00ccff;  /* rgb(0,204,255)    VIVID — primary buttons, key fills  */
+  --sky-800: #00607a;  /* derived deep blue — blue text/links on light (6.7:1)  */
+  --sky-900: #002b38;  /* derived deepest blue — rules, labels, crop marks      */
+
+  --black: #000000;    /* primary text                                          */
+  --black-soft: #1a1a1a; /* hover state of black buttons                        */
+  --grey-600: #5c5c5c; /* neutral data mark only (never body text)              */
+  --white: #ffffff;
+  --ink: #05080c;      /* near-black with a blue cast — base of every dark tint */
+
+  /* ------------------------------------------------------------------------
+   * 2. SEMANTIC ROLES — LIGHT (default for the whole site)
+   * ---------------------------------------------------------------------- */
+  --page: var(--white);
+  --surface: var(--white);
+  --surface-alt: var(--sky-100);    /* alternating section bands            */
+  --surface-tint: var(--sky-200);   /* selected / highlighted surfaces      */
+  --surface-band: var(--sky-400);   /* bold editorial band (manifesto)      */
+
+  --text-1: var(--black);                 /* headings, body          21:1  */
+  --text-2: rgba(0, 0, 0, 0.72);          /* supporting copy        ~7.4:1 */
+  --text-3: rgba(0, 0, 0, 0.6);           /* captions, meta         ~5.7:1 */
+  --text-deep: var(--sky-900);            /* labels on sky bands           */
+
+  --line: rgba(0, 0, 0, 0.09);            /* hairline dividers             */
+  --line-subtle: rgba(0, 0, 0, 0.07);     /* list rows                     */
+  --line-control: rgba(0, 0, 0, 0.18);    /* outlined button borders       */
+  --line-sky: var(--sky-300);             /* sky-tinted borders            */
+  --line-strong: var(--sky-500);          /* hover / selected borders      */
+  --line-deep: var(--sky-900);            /* editorial rules, crop marks   */
+  --line-deep-subtle: rgba(0, 43, 56, 0.18); /* ticker row dividers        */
+
+  --hover-wash: rgba(255, 255, 255, 0.32); /* hover tint on sky bands      */
+
+  --accent: var(--sky-500);               /* primary action fill           */
+  --accent-hover: var(--sky-400);
+  --on-accent: var(--black);              /* text on sky fills    12.6:1   */
+  --focus-ring: var(--black);
+
+  /* Data marks (charts, bars) — fills only, never text */
+  --mark-1: var(--sky-300);
+  --mark-2: var(--black);
+  --mark-3: var(--sky-500);
+  --mark-4: var(--grey-600);
+  --mark-5: var(--sky-400);
+
+  /* Shadows */
+  --shadow-hairline: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-soft: 0 12px 40px rgba(0, 40, 60, 0.08);
+  --shadow-card: 0 24px 60px rgba(0, 40, 60, 0.08);
+  --shadow-accent-soft: 0 6px 18px rgba(0, 204, 255, 0.22);
+  --shadow-accent: 0 8px 22px rgba(0, 204, 255, 0.35);
+  --shadow-accent-hover: 0 10px 28px rgba(0, 204, 255, 0.45);
+
+  /* ------------------------------------------------------------------------
+   * 3. DARK TINT VALUES — consumed by .theme-dark below
+   * ---------------------------------------------------------------------- */
+  --dark-text-1: var(--white);
+  --dark-text-2: rgba(229, 246, 255, 0.8);
+  --dark-text-3: rgba(229, 246, 255, 0.62);
+  --dark-line: rgba(255, 255, 255, 0.12);
+  --dark-fill: rgba(255, 255, 255, 0.06);        /* translucent controls   */
+  --dark-border: rgba(255, 255, 255, 0.3);       /* outlined controls      */
+  --dark-accent-fill: rgba(0, 204, 255, 0.14);   /* hover on dark          */
+  --dark-glass: rgba(5, 8, 12, 0.6);             /* header pill            */
+  --dark-glass-strong: rgba(5, 8, 12, 0.88);     /* mobile menu panel      */
+  --dark-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-dark: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --shadow-dark-lg: 0 20px 50px rgba(0, 0, 0, 0.45);
+  --text-shadow-dark: 0 2px 24px rgba(0, 0, 0, 0.3);
+
+  /* Hero video: fallback glow + readability scrims */
+  --hero-fallback: radial-gradient(60% 70% at 80% 40%, rgba(0, 204, 255, 0.2), transparent 70%), var(--ink);
+  /* Text-readability shade on the left only; no top/bottom vignette */
+  --scrim-hero:
+    linear-gradient(90deg, rgba(5, 8, 12, 0.82) 0%, rgba(5, 8, 12, 0.58) 34%, rgba(5, 8, 12, 0.18) 62%, rgba(5, 8, 12, 0.08) 100%);
+  --scrim-hero-mobile: linear-gradient(180deg, rgba(5, 8, 12, 0.55) 0%, rgba(5, 8, 12, 0.78) 60%, rgba(5, 8, 12, 0.9) 100%);
+
+  /* ------------------------------------------------------------------------
+   * 4. SECTION BACKGROUNDS — each band = its base tone + soft blooms of its
+   *    neighbouring shades (lighter from one corner, deeper from the other).
+   *    Deep bands only mix toward deeper/nearby tones so white text keeps AA.
+   * ---------------------------------------------------------------------- */
+  --bg-sky-100:
+    radial-gradient(80% 65% at 0% 0%, var(--white), transparent 62%),
+    radial-gradient(75% 70% at 100% 100%, var(--sky-200), transparent 66%),
+    var(--sky-100);
+  --bg-sky-200:
+    radial-gradient(75% 60% at 8% 0%, var(--sky-100), transparent 62%),
+    radial-gradient(75% 70% at 100% 100%, var(--sky-300), transparent 66%),
+    var(--sky-200);
+  --bg-sky-300:
+    radial-gradient(70% 60% at 100% 0%, var(--sky-200), transparent 62%),
+    radial-gradient(80% 70% at 0% 100%, var(--sky-400), transparent 66%),
+    var(--sky-300);
+  /* sky-400: blooms sit on the BOTTOM edge only, so the top edge stays flat
+     sky-400 and joins the scroll transition seamlessly */
+  --bg-sky-400:
+    radial-gradient(70% 60% at 0% 100%, var(--sky-300), transparent 64%),
+    radial-gradient(70% 60% at 100% 100%, var(--sky-500), transparent 64%),
+    var(--sky-400);
+  --bg-sky-500:
+    radial-gradient(70% 60% at 100% 0%, var(--sky-400), transparent 62%),
+    radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, var(--sky-500) 70%, var(--sky-800)), transparent 66%),
+    var(--sky-500);
+  --bg-sky-800:
+    radial-gradient(70% 60% at 0% 0%, color-mix(in srgb, var(--sky-800) 85%, var(--sky-500)), transparent 62%),
+    radial-gradient(80% 70% at 100% 100%, var(--sky-900), transparent 66%),
+    var(--sky-800);
+  --bg-sky-900:
+    radial-gradient(70% 70% at 100% 0%, var(--sky-800), transparent 64%),
+    radial-gradient(70% 70% at 0% 100%, var(--ink), transparent 66%),
+    var(--sky-900);
+  --bg-ink:
+    radial-gradient(60% 50% at 50% 0%, var(--sky-900), transparent 70%),
+    radial-gradient(50% 50% at 100% 100%, color-mix(in srgb, var(--sky-800) 40%, var(--ink)), transparent 70%),
+    var(--ink);
+
+  /* ------------------------------------------------------------------------
+   * 5. GRAIN — very fine two-tone film grain (dark + light specks, generated
+   *    SVG noise, no colour literals). Dark specks read on light bands, light
+   *    specks on deep ones; they roughly cancel, so no band shifts colour.
+   * ---------------------------------------------------------------------- */
+  --grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cfilter%20id='a'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.95'%20numOctaves='2'%20seed='3'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0%200%200%200%200%200%200%200%200%200%200%200%200%200%200%202%200%200%200%20-1.1'/%3E%3C/filter%3E%3Cfilter%20id='b'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.95'%20numOctaves='2'%20seed='11'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0%200%200%200%201%200%200%200%200%201%200%200%200%200%201%202%200%200%200%20-1.1'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url%28%23a%29'/%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url%28%23b%29'/%3E%3C/svg%3E");
+  --grain-size: 160px;
+  --grain-opacity: 0.39;
+
+  /* Gradients built from the palette */
+  --gradient-sky-text: linear-gradient(95deg, var(--sky-300) 0%, var(--sky-500) 100%);
+  --gradient-sky-panel: linear-gradient(135deg, var(--sky-100), var(--sky-200));
+  --gradient-sky-band: radial-gradient(70% 120% at 50% 0%, var(--sky-300), transparent 70%),
+    linear-gradient(135deg, var(--sky-400), var(--sky-500));
+}
+
+/*
+ * .theme-dark — put this class on any block that sits on dark footage or an
+ * ink background (currently: the hero and the header). It re-points the
+ * semantic roles, so every component inside flips automatically.
+ */
+.theme-dark {
+  --text-1: var(--dark-text-1);
+  --text-2: var(--dark-text-2);
+  --text-3: var(--dark-text-3);
+  --line: var(--dark-line);
+  --line-deep: var(--dark-border);
+  --line-deep-subtle: var(--dark-line);
+  --text-deep: var(--sky-300);
+  --hover-wash: var(--dark-fill);
+  --grain-opacity: 0.24;
+  --focus-ring: var(--sky-500);
+  color: var(--text-1);
+}

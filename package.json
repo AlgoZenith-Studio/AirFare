@@ -1,18 +1,18 @@
 {
-  "name": "airfare",
+  "name": "aerofarex",
   "private": true,
   "version": "0.1.0",
-  "description": "AirFare — Real-time Airfare Price Index for India (MoSPI / Smart India Hackathon)",
+  "description": "AeroFareX — Real-time Airfare Price Index for India (MoSPI / Smart India Hackathon)",
   "workspaces": [
     "landing/frontend",
     "dashboard/frontend",
     "packages/*"
   ],
   "scripts": {
-    "dev:landing": "pnpm --filter @airfare/landing-frontend dev",
-    "build:landing": "pnpm --filter @airfare/landing-frontend build",
-    "dev:dashboard": "pnpm --filter @airfare/dashboard-frontend dev",
-    "build:dashboard": "pnpm --filter @airfare/dashboard-frontend build",
+    "dev:landing": "pnpm --filter @aerofarex/landing-frontend dev",
+    "build:landing": "pnpm --filter @aerofarex/landing-frontend build",
+    "dev:dashboard": "pnpm --filter @aerofarex/dashboard-frontend dev",
+    "build:dashboard": "pnpm --filter @aerofarex/dashboard-frontend build",
     "lint": "pnpm -r lint"
   },
   "engines": {

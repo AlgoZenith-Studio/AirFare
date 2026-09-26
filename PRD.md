@@ -9,8 +9,8 @@
 - **Sovereign Analyst & Econometric Platform (`dashboard/`):** Next.js App Router analyst portal (`dashboard/frontend`) + FastAPI analytical calculation engine (`dashboard/backend/server`) with TimescaleDB, chained Laspeyres math, hedonic quality regression, and SHA-256 cryptographic auditability.
 **Published Indices:**
 - **AFI** (Air Fare Index — Headline Base-Fare Index)
-- **TCT-AFI** (Total Cost of Travel AirFare Index)
-- **ANC-AFI** (Ancillary AirFare Index)
+- **TCT-AFI** (Total Cost of Travel Air Fare Index)
+- **ANC-AFI** (Ancillary Air Fare Index)
 
 ---
 
@@ -25,13 +25,13 @@ Historically, air travel price quotes have been collected through traditional, o
 
 **The Consequence:** The official CPI airfare series suffers from a severe measurement lag, samples the wrong marketplace, under-reports actual consumer out-of-pocket costs by **8% to 15%**, and fails to capture high-frequency dynamic surges.
 
-**The Solution — AirFare:** An automated, sovereign-grade price measurement platform that continuously samples airfares across India's domestic aviation network, unbundles every quote into its granular components, corrects advertised rates into realized transaction prices using empirical booking curves and hedonic quality adjustment, and publishes high-frequency daily indices with end-to-end cryptographic auditability.
+**The Solution — AeroFareX:** An automated, sovereign-grade price measurement platform that continuously samples airfares across India's domestic aviation network, unbundles every quote into its granular components, corrects advertised rates into realized transaction prices using empirical booking curves and hedonic quality adjustment, and publishes high-frequency daily indices with end-to-end cryptographic auditability.
 
 ---
 
 ## 2. Core Vision & The Five Commitments
 
-> *"Everyone else can scrape a fare. AirFare is the only system that converts a scraped advertised price into a statistically valid consumer price, and can prove every published number back to its raw source."*
+> *"Everyone else can scrape a fare. AeroFareX is the only system that converts a scraped advertised price into a statistically valid consumer price, and can prove every published number back to its raw source."*
 
 ### The Five Commitments
 1. **Daily Frequency Instead of Monthly:** A published index every single day with zero reporting lag, replacing the slow, 30-day manual survey cycle.
@@ -44,7 +44,7 @@ Historically, air travel price quotes have been collected through traditional, o
 
 ## 3. The Four Measurement Gaps in Existing Systems
 
-| Gap | The Reality in Airline Ticketing | What Other Trackers Do | What AirFare Implements |
+| Gap | The Reality in Airline Ticketing | What Other Trackers Do | What AeroFareX Implements |
 | :--- | :--- | :--- | :--- |
 | **Gap 1: Advertised Price $\ne$ Paid Price** | $T+1$ (1 day before departure) fares are typically $2.5\times$ to $4\times$ higher than $T+45$ fares, but are transacted by fewer than 8% of travelers. | Naive scrapers record the front-page search price or lowest quote, massively overstating inflation. | **Offer-to-Transaction Correction:** Weights advance-purchase windows ($\omega_{T+1}, \dots, \omega_{T+45}$) by actual passenger booking velocity calibrated with DGCA empirical distributions. |
 | **Gap 2: Shifting Product Quality** | Airlines unbundle services (e.g., stripping free checked baggage, converting standard seats to paid, altering cancellation penalties). | Treat changes in fare family attributes as pure price inflation. | **Hedonic Quality Adjustment:** Decomposes seat attribute bundles (baggage, refundability, time of day) via regression to isolate pure price change. |
@@ -76,9 +76,9 @@ Historically, air travel price quotes have been collected through traditional, o
 ## 5. Scope & Operating Model
 
 ### 5.1 System Archetype
-* **Sovereign Infrastructure:** Non-commercial public good funded by MoSPI. AirFare has **no products to sell, no affiliate commissions, and no price-freeze upsells**. The sole objective is econometric accuracy and auditability.
-* **Ethical Collection Posture:** Rather than running clandestine botnets (an unacceptable liability for a government ministry), AirFare operates as a **declared, transparent collector**:
-  - Custom `User-Agent`: `AirFare-StatisticalCollector/2.0 (+https://mospi.gov.in/airfare-collector)`
+* **Sovereign Infrastructure:** Non-commercial public good funded by MoSPI. AeroFareX has **no products to sell, no affiliate commissions, and no price-freeze upsells**. The sole objective is econometric accuracy and auditability.
+* **Ethical Collection Posture:** Rather than running clandestine botnets (an unacceptable liability for a government ministry), AeroFareX operates as a **declared, transparent collector**:
+  - Custom `User-Agent`: `AeroFareX-StatisticalCollector/2.0 (+https://mospi.gov.in/aerofarex-collector)`
   - Off-peak execution windows (`01:00` to `04:00` IST and mid-day off-peak)
   - Strict rate-limiting with $3.5\text{s}$ jittered delay and zero concurrent hits per domain
   - Postured as a temporary observation bridge toward formal, statutory carrier API feeds.

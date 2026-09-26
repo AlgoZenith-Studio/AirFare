@@ -1,11 +1,19 @@
 {
-  "name": "@airfare/design-tokens",
+  "name": "@aerofarex/design-tokens",
   "version": "0.1.0",
   "private": true,
-  "description": "Single source of truth for AirFare CSS custom properties and the Tailwind preset built on top of them.",
+  "description": "Single source of truth for all AeroFareX colours (brand.css) plus the data-viz layer and Tailwind preset.",
   "main": "tailwind-preset.js",
   "files": [
+    "brand.css",
+    "brand.ts",
     "tokens.css",
     "tailwind-preset.js"
-  ]
+  ],
+  "exports": {
+    "./brand.css": "./brand.css",
+    "./brand": "./brand.ts",
+    "./tokens.css": "./tokens.css",
+    "./tailwind-preset": "./tailwind-preset.js"
+  }
 }

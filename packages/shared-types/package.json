@@ -1,5 +1,5 @@
 {
-  "name": "@airfare/shared-types",
+  "name": "@aerofarex/shared-types",
   "version": "0.1.0",
   "private": true,
   "description": "TypeScript types shared between apps/web and its mock API layer, mirroring the apps/api Pydantic schemas.",

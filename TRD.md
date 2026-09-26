@@ -67,7 +67,7 @@
    │ • Scheduled Runs: 02:30, 05:30, 13:00, 19:00 IST                                                 │
    │ • Declared Scraping Adapters: IndiGo, Air India, Akasa, SpiceJet, MakeMyTrip                     │
    │ • 3.5s Jittered Delays & Circuit Breaker Logic (HEALTHY -> DEGRADED -> OPEN -> RECOVERING)       │
-   │ • Hash-chained Batches & Raw Artifacts pushed to Firebase Storage (gs://airfare-raw-observations) │
+   │ • Hash-chained Batches & Raw Artifacts pushed to Firebase Storage (gs://aerofarex-raw-observations) │
    └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 

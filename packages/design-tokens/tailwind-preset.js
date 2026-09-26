@@ -1,5 +1,5 @@
 /**
- * AirFare Tailwind preset — maps tokens.css custom properties onto Tailwind's
+ * AeroFareX Tailwind preset — maps tokens.css custom properties onto Tailwind's
  * theme so components consume `bg-page`, `text-primary`, `border-border`, etc.
  * instead of raw hex values. Placeholder until apps/web's Tailwind config is wired up.
  */
@@ -7,6 +7,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        /* Brand palette (brand.css) */
+        sky: {
+          100: "var(--sky-100)",
+          200: "var(--sky-200)",
+          300: "var(--sky-300)",
+          400: "var(--sky-400)",
+          500: "var(--sky-500)",
+          800: "var(--sky-800)",
+          900: "var(--sky-900)",
+        },
+        ink: "var(--ink)",
+        accent: "var(--accent)",
+        "accent-hover": "var(--accent-hover)",
+        "on-accent": "var(--on-accent)",
+        "surface-alt": "var(--surface-alt)",
+        "surface-tint": "var(--surface-tint)",
+        "surface-band": "var(--surface-band)",
+        "text-1": "var(--text-1)",
+        "text-2": "var(--text-2)",
+        "text-3": "var(--text-3)",
+        "text-deep": "var(--text-deep)",
+        line: "var(--line)",
+        "line-sky": "var(--line-sky)",
+        "line-strong": "var(--line-strong)",
+        "line-deep": "var(--line-deep)",
+        /* UI + data-viz roles (tokens.css) */
         page: "var(--page)",
         surface: "var(--surface)",
         "surface-raised": "var(--surface-raised)",
