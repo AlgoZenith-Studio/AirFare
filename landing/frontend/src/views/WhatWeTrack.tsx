@@ -39,7 +39,7 @@ export const WhatWeTrack: React.FC = () => (
 
       <div className="ed-grid-3">
         {ITEMS.map(({ icon: Icon, tag, title, body, index }, i) => (
-          <article className="ed-box reveal" key={title}>
+          <article className="ed-box" key={title}>
             <div className="ed-box-top">
               <span className="ed-label">{tag}</span>
               <span className="ed-box-num">0{i + 1}</span>
@@ -54,7 +54,7 @@ export const WhatWeTrack: React.FC = () => (
         ))}
       </div>
 
-      <a className="ed-link reveal" href="#routes">
+      <a className="ed-link" href="#routes">
         See these numbers for a real route <ArrowUpRight size={18} aria-hidden="true" />
       </a>
     </div>

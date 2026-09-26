@@ -19,6 +19,15 @@
   font-weight: 800; font-style: italic; font-display: swap;
 }
 
+/* Hero headline: Valty DEMO (single style, Bold Italic; letters only).
+   NOTE: a demo font is usually licensed for personal/trial use; confirm a commercial
+   licence before public launch. The file name contains a space, hence %20. */
+@font-face {
+  font-family: 'Valty';
+  src: url('/fonts/Valty%20DEMO.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
 /* =========================================================== 1. TOKENS */
 :root {
   /* Colours: see packages/design-tokens/brand.css */
@@ -50,12 +59,15 @@
   --font-primary: 'AFX Serif', Georgia, 'Times New Roman', serif;     /* headings, big numbers */
   --font-secondary: 'AFX Serif', Georgia, 'Times New Roman', serif;   /* italic emphasis */
   --font-tertiary: 'Google Sans', system-ui, -apple-system, sans-serif; /* everything else */
+  --font-hero: 'Valty', 'Century Gothic', 'Google Sans', sans-serif; /* hero headline */
 
 }
 
 /* =========================================================== 2. BASE */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--header-top) + 16px); }
+/* Lenis does the smoothing when active; native smooth-behaviour would fight it */
+html.lenis { scroll-behavior: auto !important; }
 body {
   font-family: var(--font-tertiary);
   font-size: var(--fs-base);
@@ -120,9 +132,6 @@ h1, h2, h3, h4, .hero-title, .h2, .trust-item strong, .ed-box-num, .gap-giant, .
 .btn-dark:hover { background: var(--black-soft); }
 .btn-sm { height: 40px; padding: 0 var(--s-4); font-size: var(--fs-sm); border-radius: var(--r-sm); }
 
-/* Scroll reveal */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
-.reveal[data-revealed] { opacity: 1; transform: none; }
 
 /* =========================================================== 3b. ON DARK (.theme-dark blocks) */
 /* The colour flip itself is the .theme-dark class in brand.css (applied to the hero + header). */
@@ -209,29 +218,39 @@ h1, h2, h3, h4, .hero-title, .h2, .trust-item strong, .ed-box-num, .gap-giant, .
   font-size: var(--fs-display); line-height: 1.06; letter-spacing: -0.015em;
   margin-bottom: var(--s-5); text-shadow: var(--text-shadow-dark);
 }
+/* Hero headline: Valty, large, all caps. No hover effect. */
+.hero .hero-copy { max-width: 1160px; }
+.hero .hero-title {
+  font-family: var(--font-hero); font-weight: 700; text-transform: uppercase;
+  /* Two fixed rows, sized to fit the text column in BOTH directions, capped at 80px:
+     - width:  text-column width / widest row ("KNOW THE REAL COST" = 8.4em in Valty
+               incl. spacing; 8.8 leaves room for the italic overhang). Stays inside the column.
+     - height: 2 rows (1.92em) + header, subtitle, buttons, padding (~420px) fit one screen. */
+  font-size: max(40px, min(
+    80px,
+    calc((min(100vw, var(--container)) - 2 * var(--gutter)) / 8.8),
+    calc((100svh - 420px) / 1.92)
+  ));
+  line-height: 0.96; letter-spacing: 0.005em; word-spacing: 0.06em;
+  max-width: none; width: max-content; cursor: default;
+  color: var(--white);
+}
+/* two rows, each on one line (phones may wrap, see responsive rules) */
+.hero .hero-row { display: block; white-space: nowrap; padding-right: 0.08em; }
+/* accent words ("real cost"): solid lightest sky from brand.css, no gradient */
+.hero .hero-title .grad {
+  font-family: inherit; font-style: normal; font-weight: inherit; padding: 0; margin: 0;
+  background: none;
+  color: var(--hero-accent);
+  -webkit-text-fill-color: var(--hero-accent);
+}
 .hero-sub { font-size: clamp(17px, 1.35vw, 20px); color: var(--text-2); max-width: 46ch; line-height: 1.6; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-7); }
 .btn-pill { border-radius: var(--r-pill); height: 52px; padding: 0 var(--s-6); }
 .hero .btn-primary { box-shadow: var(--shadow-accent-soft); }
 .hero .btn-primary:hover { box-shadow: var(--shadow-accent); }
 
-/* Live figures: a ruled editorial row, like the rest of the site */
-.hero-stats {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: var(--s-8); border-top: 1px solid var(--line-deep); max-width: 620px;
-}
-.hero-stat { padding: var(--s-4) var(--s-5) 0; border-left: 1px solid var(--line); }
-.hero-stat:first-child { padding-left: 0; border-left: 0; }
-.hero-stat-label { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.04em; color: var(--text-deep); }
-.hero-stat-value { font-family: var(--font-primary); font-weight: 700; font-size: clamp(30px, 2.8vw, 42px); line-height: 1; margin-top: var(--s-3); }
-.hero-stat-note { font-size: var(--fs-xs); color: var(--text-3); margin-top: var(--s-2); }
 
-/* Staggered entrance on load */
-.hero-in { animation: hero-in 800ms var(--ease) both; }
-.hero-in:nth-child(2) { animation-delay: 90ms; }
-.hero-in:nth-child(3) { animation-delay: 180ms; }
-.hero-in:nth-child(4) { animation-delay: 270ms; }
-@keyframes hero-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
 /* =========================================================== 13. RESPONSIVE (header + hero) */
 @media (max-width: 1080px) {
@@ -244,15 +263,12 @@ h1, h2, h3, h4, .hero-title, .h2, .trust-item strong, .ed-box-num, .gap-giant, .
   .header-bar { padding: 0 var(--header-inset) 0 var(--s-5); }
   :root { --header-inset: 10px; }
   .hero-scrim { background: var(--scrim-hero-mobile); }
+  .hero .hero-title { font-size: clamp(40px, 12vw, 64px); }
+  .hero .hero-row { white-space: normal; }
   .hero-ctas .btn { flex: 1 1 auto; }
-  .hero-stats { margin-top: var(--s-7); }
-  .hero-stat { padding: var(--s-3) var(--s-3) 0; }
-  .hero-stat-value { font-size: 24px; }
-  .hero-stat-note { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  .reveal { opacity: 1; transform: none; }
 }
 
 /* =========================================================== 14. MANIFESTO (editorial, under hero) */
@@ -709,4 +725,31 @@ h1, h2, h3, h4, .hero-title, .h2, .trust-item strong, .ed-box-num, .gap-giant, .
   .ft-tab { grid-template-columns: 44px minmax(0, 1fr); }
   .ft-soon-title { font-size: 24px; }
   .ft-soon-example { grid-template-columns: 1fr; gap: var(--s-2); }
+}
+
+/* =========================================================== 17. SCROLL ANIMATION (two-way, see hooks/useReveal.ts) */
+/* Hidden state: shifted toward the edge it will enter from (below by default, above
+   when scrolled past). Revealed: in place. Enter uses the stagger delay; exit has none.
+   The transition list also carries the hover/selection transitions of the targets
+   (background, border, colour, shadow, gap) so this rule doesn't cancel them. */
+[data-reveal] {
+  --reveal-shift: 36px;
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-shift), 0);
+  transition:
+    opacity 550ms var(--ease), transform 700ms var(--ease),
+    background-color var(--dur) var(--ease), border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), gap var(--dur) var(--ease);
+}
+[data-reveal][data-reveal-from='above'] { --reveal-shift: -36px; }
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 650ms var(--ease) var(--reveal-delay, 0ms), transform 850ms var(--ease) var(--reveal-delay, 0ms),
+    background-color var(--dur) var(--ease), border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), gap var(--dur) var(--ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
 }

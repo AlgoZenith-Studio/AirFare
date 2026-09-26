@@ -9,7 +9,7 @@ const extraPaise = totalPaise - basePaise;
 export const HiddenGap: React.FC = () => (
   <section className="ed band-500" id="gap" aria-labelledby="gap-title">
     <div className="ed-inner gap-split">
-      <div className="gap-left reveal">
+      <div className="gap-left">
         <p className="ed-label"><span className="ed-idx">[03]</span> Hidden fees</p>
         <div className="gap-giant num">{HEADLINE.dripGap}</div>
         <h2 className="gap-title" id="gap-title">The price you see isn&apos;t the price you pay.</h2>
@@ -19,7 +19,7 @@ export const HiddenGap: React.FC = () => (
         </p>
       </div>
 
-      <div className="gap-right reveal">
+      <div className="gap-right">
         <div className="ledger-head">
           <span className="ed-label">A typical Delhi &rarr; Mumbai ticket</span>
           <span className="ledger-total num">{paiseToINR(totalPaise)}</span>

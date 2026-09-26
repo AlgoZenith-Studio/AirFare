@@ -21,7 +21,7 @@ export const WhoItsFor: React.FC = () => (
       />
       <div className="aud-ed">
         {AUDIENCE.map(({ icon: Icon, title, body }, i) => (
-          <article className="aud-box reveal" key={title}>
+          <article className="aud-box" key={title}>
             <div className="aud-box-left">
               <span className="ed-label">0{i + 1}</span>
               <h3 className="aud-box-title">{title}</h3>

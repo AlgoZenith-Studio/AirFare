@@ -11,7 +11,7 @@ import { paiseToINR } from '../lib/format';
 export const Manifesto: React.FC = () => (
   <section className="manifesto" aria-labelledby="manifesto-title">
     <div className="manifesto-inner">
-      <h2 className="manifesto-title reveal" id="manifesto-title">
+      <h2 className="manifesto-title" id="manifesto-title">
         <span>Every Fee.</span>
         <span>Every Route.</span>
         <span>Every Day.</span>
@@ -23,7 +23,7 @@ export const Manifesto: React.FC = () => (
       </div>
 
       <div className="manifesto-cols">
-        <article className="m-col reveal">
+        <article className="m-col">
           <p className="m-label">The Problem</p>
           <p className="m-body">
             Airlines show you one price, but you pay another. Fuel charges, airport fees, GST and
@@ -32,7 +32,7 @@ export const Manifesto: React.FC = () => (
           </p>
         </article>
 
-        <article className="m-col reveal">
+        <article className="m-col">
           <p className="m-label">Our Answer</p>
           <p className="m-body">
             AeroFareX checks real fares on India&apos;s busiest routes every day and adds up everything
@@ -41,7 +41,7 @@ export const Manifesto: React.FC = () => (
           </p>
         </article>
 
-        <aside className="m-ticker reveal" aria-label="Today's fares">
+        <aside className="m-ticker" aria-label="Today's fares">
           <p className="m-label">[Today &middot; {HEADLINE.asOf}]</p>
           <dl className="ticker">
             {ROUTES.map((r) => (

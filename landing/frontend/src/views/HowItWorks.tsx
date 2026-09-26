@@ -31,7 +31,7 @@ export const HowItWorks: React.FC = () => (
       />
       <ol className="steps-ed">
         {STEPS.map((s, i) => (
-          <li className="step-ed reveal" key={s.title}>
+          <li className="step-ed" key={s.title}>
             <span className="ed-label">{s.label}</span>
             <span className="step-ed-num num">0{i + 1}</span>
             <h3 className="step-ed-title">{s.title}</h3>

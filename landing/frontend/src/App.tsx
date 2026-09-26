@@ -2,6 +2,7 @@ import React from 'react';
 import { Header } from './components/Header';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { useReveal } from './hooks/useReveal';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { Hero } from './views/Hero';
 import { FlyThrough } from './components/FlyThrough';
 import { Manifesto } from './views/Manifesto';
@@ -17,6 +18,7 @@ import { SiteFooter } from './views/SiteFooter';
 
 export const App: React.FC = () => {
   useReveal();
+  useSmoothScroll();
 
   return (
     <>

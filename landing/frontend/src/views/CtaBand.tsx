@@ -6,7 +6,7 @@ export const CtaBand: React.FC = () => (
   <section className="ed band-400 cta-ed" aria-labelledby="cta-title">
     <div className="ed-inner">
       <p className="ed-label cta-ed-label"><span className="ed-idx">[07]</span> Free and open</p>
-      <h2 className="cta-ed-title reveal" id="cta-title">
+      <h2 className="cta-ed-title" id="cta-title">
         <span>Every number,</span>
         <span>open to <span className="grad">everyone</span>.</span>
       </h2>
@@ -16,7 +16,7 @@ export const CtaBand: React.FC = () => (
         <span className="crop crop--right" />
       </div>
 
-      <div className="cta-ed-row reveal">
+      <div className="cta-ed-row">
         <p className="ed-lead">
           No sign-up, no ads, nothing to sell. Check today&apos;s prices, or open the full dashboard for
           deeper analysis.

@@ -84,7 +84,7 @@ export const Features: React.FC = () => {
             {FEATURES.map((f, i) => {
               const on = i === active;
               return (
-                <div className={`ft-item reveal${on ? ' is-active' : ''}`} key={f.id}>
+                <div className={`ft-item${on ? ' is-active' : ''}`} key={f.id}>
                   <button
                     ref={(el) => { tabRefs.current[i] = el; }}
                     role="tab"

@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
       <div className="container header-shell">
         <div className="header-bar">
           <a className="brand" href="#top" aria-label="AeroFareX home">
-            <img className="brand-logo" src="/long_logo.svg" alt="AeroFareX" />
+            <img className="brand-logo" src="/logo_long_v2.svg" alt="AeroFareX" />
           </a>
 
           <nav className="nav" aria-label="Main">

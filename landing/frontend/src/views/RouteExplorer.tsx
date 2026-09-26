@@ -31,7 +31,7 @@ export const RouteExplorer: React.FC = () => {
           lead="Pick one of India's five busiest routes and when you plan to book. We'll show the advertised fare next to what you'd actually pay."
         />
 
-        <div className="rx reveal">
+        <div className="rx">
           <div className="rx-picker">
             <p className="ed-label" id="route-label">Route</p>
             <div className="rx-routes" role="group" aria-labelledby="route-label">

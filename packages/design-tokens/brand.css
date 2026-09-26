@@ -59,6 +59,7 @@
   --hover-wash: rgba(255, 255, 255, 0.32); /* hover tint on sky bands      */
 
   --accent: var(--sky-500);               /* primary action fill           */
+  --hero-accent: var(--sky-300);          /* "real cost" in the hero headline: lightest sky that still reads as blue beside white */
   --accent-hover: var(--sky-400);
   --on-accent: var(--black);              /* text on sky fills    12.6:1   */
   --focus-ring: var(--black);
