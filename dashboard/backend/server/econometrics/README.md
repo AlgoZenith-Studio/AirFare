@@ -1,4 +1,4 @@
-# app/econometrics
+# server/econometrics
 
 The statistical core:
 

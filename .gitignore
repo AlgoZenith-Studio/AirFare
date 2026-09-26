@@ -6,7 +6,8 @@ node_modules/
 # Next.js
 .next/
 out/
-apps/web/.next/
+landing/frontend/.next/
+dashboard/frontend/.next/
 
 # Production builds
 dist/
@@ -59,3 +60,14 @@ data/seed/generated/
 coverage/
 .coverage
 htmlcov/
+
+# Local Presentation Generators & Binary PPTX Assets
+*.pptx
+generate_*.py
+SIH_PRESENTATION_SUMMARY.md
+REVAMPED_PRESENTATION_SUMMARY.md
+
+# Agent and CLI local artifacts
+.agents/
+skills-lock.json
+

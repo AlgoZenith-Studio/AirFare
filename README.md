@@ -9,22 +9,31 @@ Published indices: **AFI** (headline base fare) · **TCT-AFI** (total cost of tr
 
 ```text
 AeroFareX/
-├── apps/
-│   ├── frontend/            Next.js 18+ — src/dashboard (gated analyst app) + src/landing (public site)
-│   └── backend/             FastAPI — app/dashboard (index engine, gated REST) + app/landing (public REST)
+├── landing/                     # Public Citizen Transparency Site & Public API
+│   ├── frontend/                # Public landing web app (citizen transparency, headline index widget)
+│   └── backend/                 # Public lightweight read-only REST API (cached, rate-limited)
+│
+├── dashboard/                   # Sovereign Gated Analyst Platform & Econometric Engine
+│   ├── frontend/                # Next.js 18+ analyst portal (App Router in src/app, charts, DataTables)
+│   └── backend/                 # FastAPI analytical backend (server/api/v1, server/econometrics, TimescaleDB)
+│
 ├── services/
-│   └── collector/           Data collection & ingestion engine — scraper adapters, scheduler, sanitization pipeline
+│   └── collector/               # Data collection & ingestion engine — scraper adapters, scheduler, sanitization pipeline
+│
 ├── packages/
-│   ├── design-tokens/       Single source of truth for tokens.css + Tailwind preset (shared by apps/frontend)
-│   └── shared-types/        TypeScript types shared between the frontend app and the mock API layer
+│   ├── design-tokens/           # Single source of truth for tokens.css + Tailwind preset
+│   └── shared-types/            # TypeScript contracts shared across landing and dashboard
+│
 ├── infra/
-│   ├── db/migrations/       PostgreSQL + TimescaleDB schema migrations
-│   ├── firebase/            Firestore/Storage security rules, firebase.json
-│   └── docker/              docker-compose and container definitions for local dev
+│   ├── db/migrations/           # PostgreSQL 16 + TimescaleDB schema migrations
+│   ├── firebase/                # Firestore/Storage security rules, firebase.json
+│   └── docker/                  # docker-compose and container definitions for local dev
+│
 ├── data/
-│   └── seed/                30-day realistic seed dataset + generator (powers NEXT_PUBLIC_USE_MOCK)
-├── PRD.md                   Product Requirements Document v2.0
-└── TRD.md                   Technical Requirements & Build Spec v2.0
+│   └── seed/                    # 30-day realistic seed dataset + generator (powers NEXT_PUBLIC_USE_MOCK)
+│
+├── PRD.md                       # Product Requirements Document v2.0
+└── TRD.md                       # Technical Requirements & Build Spec v2.0
 ```
 
 Full per-folder-and-file rationale (why each split exists, what belongs where, cross-cutting
@@ -32,9 +41,12 @@ naming rules): see **`TRD.md` Part G — Repository Structure & Monorepo Layout*
 
 ## Local Development
 
-See per-app `README.md` files in `apps/frontend`, `apps/backend`, and `services/collector` for setup instructions
-once each is scaffolded. The frontend is designed to run fully decoupled from the backend via
-`NEXT_PUBLIC_USE_MOCK=true`, seeded from `data/seed`.
+See per-component `README.md` files:
+- **Landing Page:** `landing/frontend` & `landing/backend`
+- **Analyst Portal:** `dashboard/frontend` & `dashboard/backend`
+- **Collector:** `services/collector`
+
+The frontend apps are designed to run fully decoupled from backends via `NEXT_PUBLIC_USE_MOCK=true`, seeded from `data/seed`.
 
 ## Non-Negotiable Rules
 

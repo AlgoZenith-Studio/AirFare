@@ -1,9 +1,12 @@
-# AirFare: Real-time Airfare Price Index for India
-## Product Requirements Document (PRD) · Version 2.0
+# AeroFareX: Real-time Airfare Price Index for India
+## Product Requirements Document (PRD) · Version 2.1
 **Programme:** Smart India Hackathon — Ministry of Statistics & Programme Implementation (MoSPI)  
 **Primary Beneficiaries:** National Statistical Office (NSO), Reserve Bank of India (RBI), Directorate General of Civil Aviation (DGCA) / Ministry of Civil Aviation (MoCA)  
-**Secondary Users:** Economic researchers, macro analysts, financial institutions, general public  
-**Product Name:** AirFare  
+**Secondary Users:** Economic researchers, macro analysts, financial institutions, general public fliers  
+**Product Name:** AeroFareX  
+**Platform Architecture:** Dual-Surface Architecture
+- **Public Citizen Transparency Surface (`landing/`):** Public Next.js frontend (`landing/frontend`) + lightweight cached REST API (`landing/backend`) exposing headline index trends, drip pricing gap, and consumer flight comparison.
+- **Sovereign Analyst & Econometric Platform (`dashboard/`):** Next.js App Router analyst portal (`dashboard/frontend`) + FastAPI analytical calculation engine (`dashboard/backend/server`) with TimescaleDB, chained Laspeyres math, hedonic quality regression, and SHA-256 cryptographic auditability.
 **Published Indices:**
 - **AFI** (Air Fare Index — Headline Base-Fare Index)
 - **TCT-AFI** (Total Cost of Travel AirFare Index)

@@ -4,12 +4,15 @@
   "version": "0.1.0",
   "description": "AirFare — Real-time Airfare Price Index for India (MoSPI / Smart India Hackathon)",
   "workspaces": [
-    "apps/web",
+    "landing/frontend",
+    "dashboard/frontend",
     "packages/*"
   ],
   "scripts": {
-    "dev:web": "pnpm --filter @airfare/web dev",
-    "build:web": "pnpm --filter @airfare/web build",
+    "dev:landing": "pnpm --filter @airfare/landing-frontend dev",
+    "build:landing": "pnpm --filter @airfare/landing-frontend build",
+    "dev:dashboard": "pnpm --filter @airfare/dashboard-frontend dev",
+    "build:dashboard": "pnpm --filter @airfare/dashboard-frontend build",
     "lint": "pnpm -r lint"
   },
   "engines": {

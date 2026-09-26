@@ -1,4 +1,4 @@
-# app/schemas
+# server/schemas
 
 Pydantic v2 request/response schemas matching TRD Part D contracts exactly, field-for-field,
 including the mandatory quality-metadata block (coverage, imputation_rate, provenance, vintage,

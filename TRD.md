@@ -1,18 +1,42 @@
-# AirFare: Real-time Airfare Price Index for India
-## Technical Requirements & Build Specification Document (TRD) · Version 2.0
-**Project:** AirFare  
-**Companions:** AirFare PRD v2.0  
+# AeroFareX: Real-time Airfare Price Index for India
+## Technical Requirements & Build Specification Document (TRD) · Version 2.1
+**Project:** AeroFareX  
+**Companions:** AeroFareX PRD v2.1  
 **Stack Architecture:**
-- **Frontend:** React 18+ (Next.js / Vite), TypeScript, Tailwind CSS (bound to CSS custom property tokens), Framer Motion, Firebase Auth SDK
-- **Backend:** FastAPI (Python 3.11+), Pydantic v2, NumPy, Pandas, Scipy, Statsmodels, SQLAlchemy / Asyncpg, Firebase Admin SDK
-- **Data & Ingestion Engine:** Node.js / Python collection orchestrators, Playwright / curl_cffi direct API adapters
-- **Databases & Cloud Storage:** PostgreSQL 16 with TimescaleDB extension, Firebase Cloud Storage (Raw artifacts), Cloud Firestore (Live health & telemetry)
+- **Public Citizen Landing Surface (`landing/`):**
+  - **Frontend (`landing/frontend`):** Lightweight Next.js / Vite, TypeScript, Tailwind CSS (bound to `packages/design-tokens`), citizen fare widget, public methodology.
+  - **Backend (`landing/backend`):** FastAPI (Python 3.11+), Pydantic v2, in-memory/Redis cached public endpoints (`/api/v1/public/*`), zero authentication barrier.
+- **Sovereign Analyst & Econometric Platform (`dashboard/`):**
+  - **Frontend (`dashboard/frontend`):** Next.js 18+ App Router (`src/app`), TypeScript, Tailwind CSS, Framer Motion, Firebase Auth SDK (RBAC: VIEWER, ANALYST, ADMIN), Accessible DataTables.
+  - **Backend (`dashboard/backend/server`):** FastAPI (Python 3.11+), Pydantic v2, NumPy, Pandas, Scipy, Statsmodels, SQLAlchemy / Asyncpg, Firebase Admin SDK.
+- **Data & Ingestion Engine (`services/collector`):** Python/Playwright/curl_cffi direct API adapters, Rate-limited ethical scraper (3.5s jittered delays, circuit breakers).
+- **Databases & Cloud Storage:** PostgreSQL 16 with TimescaleDB extension, Firebase Cloud Storage (Raw artifacts), Cloud Firestore (Live health & telemetry).
 
 ---
 
 ## Part A · System Architecture & Tech Stack
 
 ```
+   ┌────────────────────────────────────────────────────────┐
+   │            Public Citizens & General Fliers            │
+   └───────────────────────────┬────────────────────────────┘
+                               │ HTTP / HTTPS
+                               ▼
+   ┌────────────────────────────────────────────────────────┐
+   │          landing/frontend (Public Next.js)             │
+   │  • Headline AFI & TCT-AFI Widget (+12.6% Drip Gap)     │
+   │  • Public Methodology & Citizen Fare Comparison        │
+   └───────────────────────────┬────────────────────────────┘
+                               │ REST / CORS
+                               ▼
+   ┌────────────────────────────────────────────────────────┐
+   │          landing/backend (FastAPI Public Cache)        │
+   │  • GET /api/v1/public/latest                           │
+   │  • GET /api/v1/public/methodology                      │
+   └────────────────────────────────────────────────────────┘
+
+                               ══════════════════════════════════════════════════════════════════
+
                                ┌─────────────────────────────────────────┐
                                │       Firebase Auth (JWT + RBAC)        │
                                │    Roles: VIEWER | ANALYST | ADMIN      │
@@ -21,8 +45,8 @@
                  ┌──────────────────────────────────┴──────────────────────────────────┐
                  ▼                                                                     ▼
    ┌───────────────────────────┐      HTTP REST / Bearer JWT            ┌─────────────────────────────┐
-   │     Frontend Client       ├───────────────────────────────────────►│    FastAPI Analytical API   │
-   │ React + TS + Tailwind CSS │                                        │ (Python 3.11+, Pydantic v2) │
+   │    dashboard/frontend     ├───────────────────────────────────────►│      dashboard/backend      │
+   │ Next.js App Router (src/) │                                        │ (FastAPI server/ package)   │
    │ Framer Motion Animations  │◄───────────────────────────────────────┤ Econometric Index Engine    │
    │ Accessible DataTables     │      Standard Response Envelope        │ Chained Laspeyres & Hedonic │
    └─────────────┬─────────────┘                                        └──────────────┬──────────────┘
@@ -39,7 +63,7 @@
                  │ Health Updates                                                      │ Structured Writes
                  │                                                                     │
    ┌─────────────┴─────────────────────────────────────────────────────────────────────┴──────────────┐
-   │                           Data Collection & Ingestion Engine                                     │
+   │                           services/collector (Ingestion Engine)                                  │
    │ • Scheduled Runs: 02:30, 05:30, 13:00, 19:00 IST                                                 │
    │ • Declared Scraping Adapters: IndiGo, Air India, Akasa, SpiceJet, MakeMyTrip                     │
    │ • 3.5s Jittered Delays & Circuit Breaker Logic (HEALTHY -> DEGRADED -> OPEN -> RECOVERING)       │
@@ -177,17 +201,24 @@ All responses follow the standard envelope:
 ```
 
 ### Key Endpoints
-- `GET /index/latest?series={AFI|TCT-AFI|ANC-AFI}` (Role: VIEWER+)
-- `GET /index/history?series=AFI,TCT-AFI&from=YYYY-MM-DD&to=YYYY-MM-DD` (Role: VIEWER+)
-- `GET /index/family?date=YYYY-MM-DD` (Role: VIEWER+)
-- `GET /index/attribution/{date}` (Role: ANALYST+)
-- `GET /routes` & `GET /routes/{routeId}/fares` (Role: VIEWER+)
-- `GET /lead-time/matrix?date=YYYY-MM-DD` (Role: VIEWER+)
-- `GET /quality/coverage` & `GET /quality/imputation` (Role: VIEWER+)
-- `GET /health` & `GET /sources` (Role: ANALYST+)
-- `GET /observations/{id}` (Full canonical audit record) (Role: ANALYST+)
-- `GET /methodology` & `GET /index/vintages/{date}` (Role: Public)
-- `GET /export/csv` & `GET /export/sdmx` (Role: ANALYST+)
+
+#### 1. Public Landing Endpoints (`landing/backend` — Port 8001, Public CDN-cached)
+- `GET /api/v1/public/latest?series={AFI|TCT-AFI}` (Role: Public — Headline numbers & drip-pricing wedge for citizen hero)
+- `GET /api/v1/public/methodology` (Role: Public — Plain-language methodology explainer)
+- `GET /api/v1/public/routes/summary` (Role: Public — 5-trunk sector fare comparison)
+
+#### 2. Sovereign Analyst Portal Endpoints (`dashboard/backend` — Port 8000, JWT + RBAC)
+- `GET /api/v1/index/latest?series={AFI|TCT-AFI|ANC-AFI}` (Role: VIEWER+)
+- `GET /api/v1/index/history?series=AFI,TCT-AFI&from=YYYY-MM-DD&to=YYYY-MM-DD` (Role: VIEWER+)
+- `GET /api/v1/index/family?date=YYYY-MM-DD` (Role: VIEWER+)
+- `GET /api/v1/index/attribution/{date}` (Role: ANALYST+ — Additive waterfall decomposition)
+- `GET /api/v1/routes` & `GET /api/v1/routes/{routeId}/fares` (Role: VIEWER+)
+- `GET /api/v1/lead-time/matrix?date=YYYY-MM-DD` (Role: VIEWER+ — T+1 to T+45 booking horizon matrix)
+- `GET /api/v1/quality/coverage` & `GET /api/v1/quality/imputation` (Role: VIEWER+)
+- `GET /api/v1/health` & `GET /api/v1/sources` (Role: ANALYST+ — Scraper circuit breakers)
+- `GET /api/v1/observations/{id}` (Full canonical audit record with SHA-256 hash) (Role: ANALYST+)
+- `GET /api/v1/methodology` & `GET /api/v1/index/vintages/{date}` (Role: Public / VIEWER)
+- `GET /api/v1/export/csv` & `GET /api/v1/export/sdmx` (Role: ANALYST+)
 
 ---
 
@@ -290,3 +321,85 @@ To achieve complete frontend-backend decoupling on Day One, the platform feature
 3. **Realistic Price Structure:** $T+1$ fares $2.5\times$ to $4\times$ the $T+45$ fare; weekend departures 15%–25% higher; 1 festival demand surge week.
 4. **Component Split:** Base fare 60%–70%, Fuel surcharge 8%–12%, UDF/PSF fixed by airport, GST 5%, Platform fee ₹350–₹550 on OTAs.
 5. **Deliberate Edge Cases:** 4% missing cells spread across all `missing_reason` types, flagged outliers retained (demonstrating flag-not-delete policy), and one source in `DEGRADED` status to exercise all 5 UI component states.
+
+---
+
+## Part G · Repository Structure & Monorepo Layout
+
+The repository is organized as a pnpm workspace and modular multi-tier monorepo separating the public citizen surface (`landing/`) from the sovereign econometric engine (`dashboard/`):
+
+```text
+AeroFareX/
+├── landing/                     # Public Citizen Transparency Surface
+│   ├── frontend/                # Public landing web app (citizen transparency, headline index widget)
+│   │   ├── src/
+│   │   │   ├── views/           # Hero, citizen fare explorer, methodology overview
+│   │   │   ├── components/      # Public metric counters, index badges, comparison widgets
+│   │   │   └── styles/          # Tailwind styling bound to packages/design-tokens
+│   │   ├── .env.example
+│   │   └── README.md
+│   │
+│   └── backend/                 # Public Lightweight REST API (FastAPI, Python 3.11+)
+│       ├── server/
+│       │   ├── routes/          # Public cached endpoints (/public/latest, /public/methodology)
+│       │   ├── services/        # High-level aggregate cache layer (zero authentication required)
+│       │   └── schemas/         # Public response envelopes
+│       ├── tests/               # Public API regression tests
+│       ├── .env.example
+│       └── README.md
+│
+├── dashboard/                   # Sovereign Gated Analyst Platform & Econometric Engine
+│   ├── frontend/                # Next.js 18+ Sovereign Analyst Portal
+│   │   ├── src/
+│   │   │   ├── app/             # Next.js App Router (Role-gated: VIEWER, ANALYST, ADMIN)
+│   │   │   ├── components/      # UI component library
+│   │   │   │   ├── charts/      # Accessible chart frames, Laspeyres series, lead-time matrix
+│   │   │   │   └── ui/          # Quality badges, breadcrumbs, status indicators, DataTables
+│   │   │   ├── lib/             # API client, Firebase auth helpers, mock server
+│   │   │   ├── styles/          # Global styles importing design tokens
+│   │   │   └── types/           # Frontend-specific type augmentations
+│   │   ├── .env.example
+│   │   └── README.md
+│   │
+│   └── backend/                 # FastAPI Analytical Backend (Python 3.11+)
+│       ├── server/              # Sovereign calculation engine (TimescaleDB, RBAC, SDMX)
+│       │   ├── api/v1/          # Versioned REST router modules (index, routes, attribution, audit)
+│       │   ├── core/            # Config, security middleware, JWT RBAC verification
+│       │   ├── db/              # Asyncpg connection pooling, TimescaleDB sessions
+│       │   ├── econometrics/    # Chained Laspeyres, Jevons aggregation, booking curve, hedonic regression
+│       │   ├── models/          # SQLAlchemy ORM models for observations, snapshots, ledger
+│       │   ├── schemas/         # Pydantic v2 request & response schemas
+│       │   └── services/        # Orchestration, cache management, export services
+│       ├── tests/               # Unit, integration, and econometric mathematical test suites
+│       ├── .env.example
+│       └── README.md
+│
+├── services/
+│   └── collector/               # Data Collection & Ingestion Engine
+│       ├── adapters/            # Carrier & OTA scrapers (IndiGo, Air India, Akasa, SpiceJet, MakeMyTrip)
+│       ├── orchestrator/        # Cron scheduler (02:30, 05:30, 13:00, 19:00 IST), circuit breakers
+│       ├── pipeline/            # Fare decomposition, IQR outlier filtering, cell-mean imputation
+│       ├── storage/             # SHA-256 batch hasher, Firebase Cloud Storage raw payload archiver
+│       ├── .env.example
+│       └── README.md
+│
+├── packages/
+│   ├── design-tokens/           # Shared design tokens (tokens.css, Tailwind CSS presets)
+│   └── shared-types/            # Canonical TypeScript contracts shared across apps
+│
+├── infra/
+│   ├── db/migrations/           # PostgreSQL 16 + TimescaleDB hypertable DDL migrations
+│   ├── firebase/                # Firestore security rules, Storage bucket policies
+│   └── docker/                  # Docker Compose multi-container local stack definitions
+│
+├── data/
+│   └── seed/                    # 30-day realistic seed dataset & generator (NEXT_PUBLIC_USE_MOCK)
+│
+├── PRD.md                       # Product Requirements Document v2.0
+├── TRD.md                       # Technical Requirements & Build Specification v2.0
+├── README.md                    # Monorepo onboarding guide & non-negotiable rules
+├── package.json                 # Root monorepo workspace configuration
+└── pnpm-workspace.yaml          # pnpm workspace definition
+```
+
+

@@ -1,4 +1,4 @@
-# app/models
+# server/models
 
 SQLAlchemy ORM models mirroring infra/db/migrations: sources, source_policies, routes,
 route_weights, carriers, raw_observations (append-only), fare_observations (hypertable),
